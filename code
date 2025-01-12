@@ -1,0 +1,57 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
+
+message = "Automation Code"
+numbers = [
+    "+1234567890"
+]
+
+def send_whatsapp_messages(numbers, message):
+    service = Service(ChromeDriverManager().install())  
+    driver = webdriver.Chrome(service=service)
+    
+    driver.get("https://web.whatsapp.com/")
+    time.sleep(15)
+
+    for number in numbers:
+        try:
+            
+            search_box = WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.XPATH, "//div[@contenteditable='true']"))
+            )
+            search_box.click()
+            search_box.send_keys(Keys.CONTROL + "a")  
+            search_box.send_keys(Keys.BACKSPACE)  
+            
+            time.sleep(1)  
+            
+            
+            search_box.send_keys(number)
+            time.sleep(3)  
+            search_box.send_keys(Keys.RETURN)  
+
+            
+            message_box = WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.XPATH, "//div[@class='x1hx0egp x6ikm8r x1odjw0f x1k6rcq7 x6prxxf' and @contenteditable='true' and @role='textbox' and @aria-placeholder='Type a message']/p[contains(@class, 'selectable-text') and contains(@class, 'copyable-text') and contains(@class, 'x15bjb6t') and contains(@class, 'x1n2onr6')]"))
+            )
+            
+            
+            message_box.send_keys(message)
+            message_box.send_keys(Keys.RETURN)  
+            print(f"Message successfully sent to {number}.")
+            
+            time.sleep(2)  
+            
+        except Exception as e:
+            print(f"Failed to send message to {number}: {e}")
+    
+    driver.quit()  
+
+
+send_whatsapp_messages(numbers, message)
