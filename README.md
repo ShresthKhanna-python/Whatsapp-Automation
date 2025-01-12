@@ -37,7 +37,7 @@ This Python script automates the process of sending WhatsApp messages via WhatsA
 
 ## Usage
 
-1. Open the script and modify the `numbers` list with the recipient's phone numbers. Make sure the numbers are in the international format (e.g., `+919873311622`).
+1. Open the script and modify the `numbers` list with the recipient's phone numbers. Make sure the numbers are in the international format (e.g., `+1234567891`).
 2. Set the desired message you want to send in the `message` variable.
 3. Run the script:
     ```bash
